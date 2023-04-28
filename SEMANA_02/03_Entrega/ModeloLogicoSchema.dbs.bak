@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Sqlite" id="Project-2348" database="Sqlite" >
+	<schema name="Default" >
+		<table name="TblCodigo" >
+			<column name="CodigoDoUsuario" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_TblCodigo" unique="PRIMARY_KEY" >
+				<column name="CodigoDoUsuario" />
+			</index>
+			<fk name="fk_tblcodigo" to_schema="Default" to_table="TblInformacoesPrincipais" >
+				<fk_column name="CodigoDoUsuario" pk="CodigoDoUsuario" />
+			</fk>
+		</table>
+		<table name="TblInformacoesPrincipais" >
+			<column name="CodigoDoUsuario" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Nome" type="CHAR" length="300" jt="1" />
+			<index name="pk_TblInformacoesPrincipais" unique="PRIMARY_KEY" >
+				<column name="CodigoDoUsuario" />
+			</index>
+		</table>
+	</schema>
+	<connector name="Sqlite" database="Sqlite" driver_class="org.sqlite.JDBC" driver_jar="sqlite-jdbc-3.40.0.0.jar" driver_desc="Standard" host="localhost" port="7210" instance="C:/Tutorial_M2/SEMANA_02/03_Entrega/BancoDeDados.db" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-212" show_relation="columns" >
+		<entity schema="Default" name="TblCodigo" color="C1D8EE" x="48" y="48" />
+		<entity schema="Default" name="TblInformacoesPrincipais" color="C1D8EE" x="288" y="80" />
+	</layout>
+</project>
