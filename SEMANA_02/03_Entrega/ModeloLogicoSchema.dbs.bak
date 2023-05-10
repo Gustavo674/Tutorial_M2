@@ -1,70 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="Sqlite" id="Project-2348" database="Sqlite" >
 	<schema name="Default" >
-		<table name="TblCodigo" >
-			<column name="CodigoDoUsuario" type="INTEGER" jt="4" mandatory="y" />
-			<index name="pk_TblCodigo" unique="PRIMARY_KEY" >
-				<column name="CodigoDoUsuario" />
+		<table name="TblCandidato" prior="TblCand" >
+			<column name="ID_Candidato" prior="ID_Candidat" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Nome" type="CHAR" length="45" jt="1" mandatory="y" />
+			<column name="Endereço" type="CHAR" length="45" jt="1" mandatory="y" />
+			<column name="Telefone" type="INTEGER" jt="4" mandatory="y" />
+			<column name="E-mail" type="CHAR" length="45" jt="1" mandatory="y" />
+			<index name="pk_TblCandidato" unique="PRIMARY_KEY" >
+				<column name="ID_Candidato" />
 			</index>
-			<fk name="fk_tblcodigo" to_schema="Default" to_table="TblInformacoesPrincipais" >
-				<fk_column name="CodigoDoUsuario" pk="CodigoDoUsuario" />
+			<fk name="fk_tblcandidato" to_schema="Default" to_table="TblFormaçãoAcadêmica" >
+				<fk_column name="ID_Candidato" pk="ID_Candidato" />
+			</fk>
+			<fk name="fk_tblcandidato_tblhabilidades" to_schema="Default" to_table="TblHabilidades" >
+				<fk_column name="ID_Candidato" pk="ID_Candidato" />
+			</fk>
+			<fk name="fk_tblcandidato_tblcandidato" to_schema="Default" to_table="TblExperiênciaProfissional" >
+				<fk_column name="ID_Candidato" pk="ID_Candidato" />
+			</fk>
+			<fk name="fk_tblcandidato_tblcandidato_" to_schema="Default" to_table="TblRealizações" >
+				<fk_column name="ID_Candidato" pk="ID_Candidato" />
 			</fk>
 		</table>
-		<table name="TblDadosSobreMim" >
-			<column name="Localização" type="CHAR" length="300" jt="1" mandatory="y" >
-				<comment><![CDATA[Rua/Avenida...São Paulo-SP]]></comment>
-			</column>
-			<column name="Telefone" type="INTEGER" length="300" jt="4" mandatory="y" />
-			<column name="E-mail" type="CHAR" length="300" jt="1" mandatory="y" />
-			<column name="CodigoDoUsuario" type="INTEGER" jt="4" mandatory="y" />
-			<column name="Habilidades" type="INTEGER" jt="4" mandatory="y" >
-				<comment><![CDATA[Numerar de 1 a 5 as habilidades com certas plataformas]]></comment>
-			</column>
-			<column name="Personalidade" type="INTEGER" jt="4" mandatory="y" >
-				<comment><![CDATA[1 - 5]]></comment>
-			</column>
-			<index name="pk_TblDadosSobreMim" unique="PRIMARY_KEY" >
-				<column name="CodigoDoUsuario" />
+		<table name="TblExperiênciaProfissional" prior="Tbl" >
+			<column name="ID_Experiência" type="INTEGER" jt="4" mandatory="y" />
+			<column name="ID_Candidato" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Empresa" type="CHAR" length="300" jt="1" mandatory="y" />
+			<column name="Cargo" type="CHAR" length="300" jt="1" mandatory="y" />
+			<column name="Período" type="CHAR" length="300" jt="1" mandatory="y" />
+			<column name="Descrição das responsabilidades e realizações" type="CHAR" length="300" jt="1" mandatory="y" />
+			<index name="pk_TblExperiênciaProfissional" unique="PRIMARY_KEY" >
+				<column name="ID_Experiência" />
+			</index>
+			<index name="unq_TblExperiênciaProfissional_ID_Candidato" unique="UNIQUE_KEY" >
+				<column name="ID_Candidato" />
 			</index>
 		</table>
-		<table name="TblFormação" >
-			<column name="CodigoDoUsuario" type="CHAR" length="300" jt="1" mandatory="y" />
-			<column name="Curso1" type="CHAR" length="300" jt="1" mandatory="y" />
-			<column name="Curso2" type="CHAR" length="300" jt="1" mandatory="y" />
-			<column name="Experiencia" type="CHAR" length="500" jt="1" mandatory="y" >
-				<comment><![CDATA[Descrever as experiencias de trabalho]]></comment>
-			</column>
-			<column name="Realizacoes" type="CHAR" length="300" jt="1" mandatory="y" >
-				<comment><![CDATA[Descrever grandes feitos]]></comment>
-			</column>
-			<index name="pk_TblFormação" unique="PRIMARY_KEY" >
-				<column name="CodigoDoUsuario" />
+		<table name="TblFormaçãoAcadêmica" prior="TblFormação" >
+			<column name="ID_Formação" type="CHAR" length="300" jt="1" mandatory="y" />
+			<column name="ID_Candidato" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Instituição" type="CHAR" length="300" jt="1" mandatory="y" />
+			<column name="Curso" type="CHAR" length="300" jt="1" mandatory="y" />
+			<column name="Nível" type="CHAR" length="300" jt="1" mandatory="y" />
+			<column name="Ano de Conclusão" type="CHAR" length="300" jt="1" mandatory="y" />
+			<index name="pk_TblFormaçãoAcadêmica" unique="PRIMARY_KEY" >
+				<column name="ID_Formação" />
+			</index>
+			<index name="unq_TblFormaçãoAcadêmica_ID_Candidato" unique="UNIQUE_KEY" >
+				<column name="ID_Candidato" />
 			</index>
 		</table>
-		<table name="TblInformacoesPrincipais" >
-			<column name="CodigoDoUsuario" type="INTEGER" jt="4" mandatory="y" />
-			<column name="Nome" type="CHAR" length="300" jt="1" />
-			<column name="Foto" type="CHAR" length="300" jt="1" />
-			<column name="Cargo" type="CHAR" length="300" jt="1" />
-			<index name="pk_TblInformacoesPrincipais" unique="PRIMARY_KEY" >
-				<column name="CodigoDoUsuario" />
+		<table name="TblHabilidades" prior="Tbl" >
+			<column name="ID_Habildades" type="INTEGER" jt="4" mandatory="y" />
+			<column name="ID_Candidato" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Habilidades" type="CHAR" length="300" jt="1" mandatory="y" />
+			<index name="pk_TblHabilidades" unique="PRIMARY_KEY" >
+				<column name="ID_Habildades" />
 			</index>
-			<index name="unq_TblInformacoesPrincipais_Nome" unique="UNIQUE_KEY" >
-				<column name="Nome" />
+			<index name="unq_TblHabilidades_ID_Candidato" unique="UNIQUE_KEY" >
+				<column name="ID_Candidato" />
 			</index>
-			<fk name="fk_TblInformacoesPrincipais" to_schema="Default" to_table="TblDadosSobreMim" >
-				<fk_column name="Nome" pk="CodigoDoUsuario" />
-			</fk>
-			<fk name="fk_tblinformacoesprincipais2" to_schema="Default" to_table="TblFormação" >
-				<fk_column name="Cargo" pk="CodigoDoUsuario" />
-			</fk>
+		</table>
+		<table name="TblRealizações" prior="Tbl" >
+			<column name="ID_Realizações" type="INTEGER" jt="4" mandatory="y" />
+			<column name="ID_Candidato" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Realizações" type="CHAR" length="300" jt="1" mandatory="y" />
+			<index name="pk_TblRealizações" unique="PRIMARY_KEY" >
+				<column name="ID_Realizações" />
+			</index>
+			<index name="unq_TblRealizações_ID_Candidato" unique="UNIQUE_KEY" >
+				<column name="ID_Candidato" />
+			</index>
 		</table>
 	</schema>
 	<connector name="Sqlite" database="Sqlite" driver_class="org.sqlite.JDBC" driver_jar="sqlite-jdbc-3.40.0.0.jar" driver_desc="Standard" host="localhost" port="7210" instance="C:/Tutorial_M2/SEMANA_02/03_Entrega/BancoDeDados.db" useSystemProxy="false" />
 	<layout name="Main Layout" id="Layout-212" show_relation="columns" >
-		<entity schema="Default" name="TblCodigo" color="C1D8EE" x="48" y="48" />
-		<entity schema="Default" name="TblDadosSobreMim" color="C1D8EE" x="560" y="128" />
-		<entity schema="Default" name="TblFormação" color="C1D8EE" x="560" y="304" />
-		<entity schema="Default" name="TblInformacoesPrincipais" color="C1D8EE" x="288" y="80" />
+		<entity schema="Default" name="TblCandidato" color="C1D8EE" x="48" y="48" />
+		<entity schema="Default" name="TblExperiênciaProfissional" color="C1D8EE" x="400" y="288" />
+		<entity schema="Default" name="TblFormaçãoAcadêmica" color="C1D8EE" x="80" y="288" />
+		<entity schema="Default" name="TblHabilidades" color="C1D8EE" x="256" y="288" />
+		<entity schema="Default" name="TblRealizações" color="C1D8EE" x="720" y="288" />
 	</layout>
 </project>
